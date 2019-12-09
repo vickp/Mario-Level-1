@@ -40,7 +40,7 @@ RUN_ACCEL = 20
 SMALL_TURNAROUND = .35
 
 GRAVITY = 1.01
-JUMP_GRAVITY = .31
+JUMP_GRAVITY = .25
 JUMP_VEL = -10
 FAST_JUMP_VEL = -12.5
 MAX_Y_VEL = 11
@@ -141,6 +141,7 @@ MAIN_MENU = 'main menu'
 LOAD_SCREEN = 'loading screen'
 LEVEL = 'level'
 GAME_OVER = 'game over'
+GAME_CLEAR = 'game clear'
 FAST_COUNT_DOWN = 'fast count down'
 END_OF_LEVEL = 'end of level'
 
@@ -160,6 +161,7 @@ MAIN_MENU = 'main menu'
 LOAD_SCREEN = 'load screen'
 TIME_OUT = 'time out'
 GAME_OVER = 'game over'
+GAME_CLEAR = 'game clear'
 LEVEL1 = 'level1'
 
 #SOUND STATEZ

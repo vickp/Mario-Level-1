@@ -26,6 +26,11 @@ class Sound(object):
             pg.mixer.music.load(self.music_dict['game_over'])
             pg.mixer.music.play()
             self.state = c.GAME_OVER
+        elif self.overhead_info.state == c.GAME_CLEAR:
+            pg.mixer.music.load(self.music_dict['world_clear'])
+            pg.mixer.music.play()
+            self.state = c.GAME_CLEAR
+
 
 
     def update(self, game_info, mario):
@@ -86,6 +91,8 @@ class Sound(object):
         elif self.state == c.MARIO_DEAD:
             pass
         elif self.state == c.GAME_OVER:
+            pass
+        elif self.state == c.GAME_CLEAR:
             pass
 
     def play_music(self, key, state):

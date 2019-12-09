@@ -37,6 +37,7 @@ class OverheadInfo(object):
         self.create_flashing_coin()
         self.create_mario_image()
         self.create_game_over_label()
+        self.create_game_clear_label()
         self.create_time_out_label()
         self.create_main_menu_labels()
 
@@ -203,6 +204,15 @@ class OverheadInfo(object):
 
         self.game_over_label = [game_label, over_label]
 
+    def create_game_clear_label(self):
+        game_label = []
+        clear_label = []
+
+        self.create_label(game_label, 'GAME', 280, 300)
+        self.create_label(clear_label, 'CLEAR', 400, 300)
+
+        self.game_clear_label = [game_label, clear_label]    
+
 
     def create_time_out_label(self):
         """Create the label for the time out screen"""
@@ -265,6 +275,11 @@ class OverheadInfo(object):
             self.update_coin_total(level_info)
 
         elif self.state == c.GAME_OVER:
+            self.score = level_info[c.SCORE]
+            self.update_score_images(self.score_images, self.score)
+            self.update_coin_total(level_info)
+
+        elif self.state == c.GAME_CLEAR:
             self.score = level_info[c.SCORE]
             self.update_score_images(self.score_images, self.score)
             self.update_coin_total(level_info)
@@ -343,6 +358,8 @@ class OverheadInfo(object):
             self.draw_level_screen_info(surface)
         elif self.state == c.GAME_OVER:
             self.draw_game_over_screen_info(surface)
+        elif self.state == c.GAME_CLEAR:
+            self.draw_game_clear_screen_info(surface)
         elif self.state == c.FAST_COUNT_DOWN:
             self.draw_level_screen_info(surface)
         elif self.state == c.END_OF_LEVEL:
@@ -434,6 +451,22 @@ class OverheadInfo(object):
 
         surface.blit(self.flashing_coin.image, self.flashing_coin.rect)
 
+    def draw_game_clear_screen_info(self, surface):
+        for info in self.score_images:
+            surface.blit(info.image, info.rect)
+
+        for word in self.game_clear_label:
+            for letter in word:
+                surface.blit(letter.image, letter.rect)
+
+        for character in self.coin_count_images:
+            surface.blit(character.image, character.rect)
+
+        for label in self.label_list:
+            for letter in label:
+                surface.blit(letter.image, letter.rect)
+
+        surface.blit(self.flashing_coin.image, self.flashing_coin.rect)
 
     def draw_time_out_screen_info(self, surface):
         """Draws info when on the time out screen"""

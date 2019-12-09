@@ -12,6 +12,7 @@ def main():
                   c.LOAD_SCREEN: load_screen.LoadScreen(),
                   c.TIME_OUT: load_screen.TimeOut(),
                   c.GAME_OVER: load_screen.GameOver(),
+                  c.GAME_CLEAR: load_screen.GameClear(),
                   c.LEVEL1: level1.Level1()}
 
     run_it.setup_states(state_dict, c.MAIN_MENU)
