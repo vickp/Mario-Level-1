@@ -144,7 +144,7 @@ class Menu(tools._State):
                 if keys[input]:
                     self.reset_game_info()
                     # 실행시키는 구문
-                    self.done = False
+                    self.done = True
 
 
     def reset_game_info(self):
