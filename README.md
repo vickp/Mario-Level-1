@@ -1,3 +1,14 @@
+MJU 공개SW실무 팀프로젝트
+
+원본 : https://github.com/justinmeister/Mario-Level-1
+
+게임 클리어 화면 추가 
+Stage 2 추가
+체크포인트 활성화 - Stage 1에만 적용, Stage 2 미구현
+2 Player Game 활성화 - 현재 마리오로만 가능, 기타 캐릭터 구현 예정
+
+
+/*
 Super Mario Bros Level 1
 =============
 
@@ -31,3 +42,4 @@ http://www.youtube.com/watch?v=HBbzYKMfx5Y
 DISCLAIMER:
 
 This project is intended for non-commercial educational purposes.
+*/
