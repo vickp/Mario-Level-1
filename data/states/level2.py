@@ -17,7 +17,7 @@ from .. components import score
 from .. components import castle_flag
 
 
-class Level1(tools._State):
+class Level2(tools._State):
     def __init__(self):
         tools._State.__init__(self)
 
@@ -25,11 +25,12 @@ class Level1(tools._State):
         """Called when the State object is created"""
         self.game_info = persist
         self.persist = self.game_info
+        
         self.game_info[c.CURRENT_TIME] = current_time
         self.game_info[c.LEVEL_STATE] = c.NOT_FROZEN
         self.game_info[c.MARIO_DEAD] = False
 
-        self.state = c.NOT_FROZEN
+        self.state = c.FROZEN
         self.death_timer = 0
         self.flag_timer = 0
         self.flag_score = None
@@ -47,7 +48,10 @@ class Level1(tools._State):
         self.setup_coin_boxes()
         self.setup_flag_pole()
         self.setup_enemies()
+
+        # 마리오의 위치 
         self.setup_mario()
+        
         self.setup_checkpoints()
         self.setup_spritegroups()
 
@@ -55,7 +59,7 @@ class Level1(tools._State):
     def setup_background(self):
         """Sets the background image, rect and scales it to the correct
         proportions"""
-        self.background = setup.GFX['level_1']
+        self.background = setup.GFX['level_2']
         self.back_rect = self.background.get_rect()
         self.background = pg.transform.scale(self.background,
                                   (int(self.back_rect.width*c.BACKGROUND_MULTIPLER),
@@ -189,6 +193,7 @@ class Level1(tools._State):
         brick29 = bricks.Brick(7202, 365)
         brick30 = bricks.Brick(7245, 365)
         brick31 = bricks.Brick(7331, 365)
+        brick32 = bricks.Brick(300, 365, c.STAR, self.powerup_group)
 
         self.brick_group = pg.sprite.Group(brick1,  brick2,
                                            brick3,  brick4,
@@ -205,7 +210,7 @@ class Level1(tools._State):
                                            brick25, brick26,
                                            brick27, brick28,
                                            brick29, brick30,
-                                           brick31)
+                                           brick31, brick32)
 
 
     def setup_coin_boxes(self):
@@ -305,11 +310,18 @@ class Level1(tools._State):
                                  enemy_group9,
                                  enemy_group10]
 
-
+    # 마리오의 위치 
     def setup_mario(self):
         """Places Mario at the beginning of the level"""
         self.mario = mario.Mario()
         self.mario.rect.x = self.viewport.x + 110
+        self.mario.rect.bottom = c.GROUND_HEIGHT
+
+    # 루이지의 위치 
+    def setup_luigi(self):
+        """Places Mario at the beginning of the level"""
+        self.mario = mario.Mario()
+        self.mario.rect.x = self.viewport.x + 170
         self.mario.rect.bottom = c.GROUND_HEIGHT
 
 
@@ -404,11 +416,14 @@ class Level1(tools._State):
     def update_all_sprites(self, keys):
         """Updates the location of all sprites on the screen."""
         self.mario.update(keys, self.game_info, self.powerup_group)
+
         for score in self.moving_score_list:
             score.update(self.moving_score_list, self.game_info)
+
         if self.flag_score:
             self.flag_score.update(None, self.game_info)
             self.check_to_add_flag_score()
+
         self.flag_pole_group.update()
         self.check_points_check()
         self.enemy_group.update(self.game_info)
@@ -419,9 +434,12 @@ class Level1(tools._State):
         self.powerup_group.update(self.game_info, self.viewport)
         self.coin_group.update(self.game_info, self.viewport)
         self.brick_pieces_group.update()
+
         self.adjust_sprite_positions()
+
         self.check_if_mario_in_transition_state()
         self.check_for_mario_death()
+        
         self.update_viewport()
         self.overhead_info_display.update(self.game_info, self.mario)
 
@@ -1405,7 +1423,7 @@ class Level1(tools._State):
             self.flag_timer = self.current_time
         elif (self.current_time - self.flag_timer) > 2000:
             self.set_game_info_values()
-            self.next = c.LEVEL2
+            self.next = c.GAME_CLEAR
             self.sound_manager.stop_music()
             self.done = True
 

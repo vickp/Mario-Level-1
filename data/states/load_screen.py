@@ -12,8 +12,12 @@ class LoadScreen(tools._State):
 
     def startup(self, current_time, persist):
         self.start_time = current_time
+        
         self.persist = persist
         self.game_info = self.persist
+
+        
+        
         self.next = self.set_next_state()
 
         info_state = self.set_overhead_info_state()
@@ -49,7 +53,7 @@ class LoadScreen(tools._State):
 
 
 
-
+# 게임 오버 
 class GameOver(LoadScreen):
     """A loading screen with Game Over"""
     def __init__(self):
@@ -79,6 +83,7 @@ class GameOver(LoadScreen):
         else:
             self.done = True
 
+# 게임 클리어 
 class GameClear(LoadScreen):
     def __init__(self):
         super(GameClear, self).__init__()
@@ -105,7 +110,7 @@ class GameClear(LoadScreen):
         else:
             self.done = True
 
-
+# 타임 아웃 
 class TimeOut(LoadScreen):
     """Loading Screen with Time Out"""
     def __init__(self):

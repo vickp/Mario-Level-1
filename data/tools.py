@@ -8,7 +8,10 @@ keybinding = {
     'jump':pg.K_a,
     'left':pg.K_LEFT,
     'right':pg.K_RIGHT,
-    'down':pg.K_DOWN
+    'down':pg.K_DOWN,
+
+    'action_2':pg.K_n,
+    'jump_2':pg.K_m
 }
 
 class Control(object):
@@ -17,17 +20,23 @@ class Control(object):
     states is also found here."""
     def __init__(self, caption):
         self.screen = pg.display.get_surface()
+
         self.done = False
+        
         self.clock = pg.time.Clock()
         self.caption = caption
         self.fps = 60
         self.show_fps = False
         self.current_time = 0.0
         self.keys = pg.key.get_pressed()
+        # state의 종류 
         self.state_dict = {}
+        # state의 이름 
         self.state_name = None
+        # 현재 state
         self.state = None
 
+    # states를 준비
     def setup_states(self, state_dict, start_state):
         self.state_dict = state_dict
         self.state_name = start_state
@@ -66,8 +75,8 @@ class Control(object):
             self.show_fps = not self.show_fps
             if not self.show_fps:
                 pg.display.set_caption(self.caption)
-
-
+    
+    # 프로그램의 메인 루프 
     def main(self):
         """Main loop for entire program"""
         while not self.done:
@@ -82,6 +91,7 @@ class Control(object):
 
 
 class _State(object):
+    # state 기본 셋팅 
     def __init__(self):
         self.start_time = 0.0
         self.current_time = 0.0

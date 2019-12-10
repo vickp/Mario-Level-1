@@ -3,7 +3,7 @@ __author__ = 'justinarmstrong'
 
 """
 This is an attempt to recreate the first level of
-Super Mario Bros for the NES.
+Super yMario Bros for the NES.
 """
 
 import sys

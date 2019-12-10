@@ -152,6 +152,7 @@ SCORE = 'score'
 TOP_SCORE = 'top score'
 LIVES = 'lives'
 CURRENT_TIME = 'current time'
+#현재 레벨의 상태 
 LEVEL_STATE = 'level state'
 CAMERA_START_X = 'camera start x'
 MARIO_DEAD = 'mario dead'
@@ -163,6 +164,7 @@ TIME_OUT = 'time out'
 GAME_OVER = 'game over'
 GAME_CLEAR = 'game clear'
 LEVEL1 = 'level1'
+LEVEL2 = 'level2'
 
 #SOUND STATEZ
 NORMAL = 'normal'

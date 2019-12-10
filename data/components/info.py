@@ -24,6 +24,7 @@ class OverheadInfo(object):
         self.current_time = 0
         self.total_lives = game_info[c.LIVES]
         self.top_score = game_info[c.TOP_SCORE]
+        # 현재 state
         self.state = state
         self.special_state = None
         self.game_info = game_info

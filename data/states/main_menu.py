@@ -7,33 +7,45 @@ from .. components import info, mario
 
 
 class Menu(tools._State):
+    
     def __init__(self):
         """Initializes the state"""
+        # tools를 활용 
         tools._State.__init__(self)
+
         persist = {c.COIN_TOTAL: 0,
                    c.SCORE: 0,
-                   c.LIVES: 3,
+                   c.LIVES: 4,
                    c.TOP_SCORE: 0,
                    c.CURRENT_TIME: 0.0,
                    c.LEVEL_STATE: None,
                    c.CAMERA_START_X: 0,
                    c.MARIO_DEAD: False}
+        
         self.startup(0.0, persist)
 
     def startup(self, current_time, persist):
         """Called every time the game's state becomes this one.  Initializes
         certain values"""
+
+        # 다음 state
         self.next = c.LOAD_SCREEN
+        
         self.persist = persist
         self.game_info = persist
+        
         self.overhead_info = info.OverheadInfo(self.game_info, c.MAIN_MENU)
 
         self.sprite_sheet = setup.GFX['title_screen']
+        
         self.setup_background()
-        self.setup_mario()
+
+        # 마리오를 준비시킨다 
+        # self.setup_mario()
+
         self.setup_cursor()
 
-
+    # 커서의 위치 
     def setup_cursor(self):
         """Creates the mushroom cursor to select 1 or 2 player game"""
         self.cursor = pg.sprite.Sprite()
@@ -42,7 +54,7 @@ class Menu(tools._State):
             24, 160, 8, 8, dest, setup.GFX['item_objects'])
         self.cursor.state = c.PLAYER1
 
-
+    # 마리오의 위치 
     def setup_mario(self):
         """Places Mario at the beginning of the level"""
         self.mario = mario.Mario()
@@ -92,40 +104,54 @@ class Menu(tools._State):
         """Updates the state every refresh"""
         self.current_time = current_time
         self.game_info[c.CURRENT_TIME] = self.current_time
+        # 커서 업데이트 
         self.update_cursor(keys)
         self.overhead_info.update(self.game_info)
 
         surface.blit(self.background, self.viewport, self.viewport)
         surface.blit(self.image_dict['GAME_NAME_BOX'][0],
                      self.image_dict['GAME_NAME_BOX'][1])
-        surface.blit(self.mario.image, self.mario.rect)
+
+        # 마리오 이미지
+        # surface.blit(self.mario.image, self.mario.rect)
+        
         surface.blit(self.cursor.image, self.cursor.rect)
         self.overhead_info.draw(surface)
 
 
     def update_cursor(self, keys):
         """Update the position of the cursor"""
-        input_list = [pg.K_RETURN, pg.K_a, pg.K_s]
+        input_list = [pg.K_RETURN, pg.K_a, pg.K_s, pg.K_n, pg.K_m]
 
         if self.cursor.state == c.PLAYER1:
             self.cursor.rect.y = 358
+            # 커서의 위치 변경 
             if keys[pg.K_DOWN]:
                 self.cursor.state = c.PLAYER2
+            # input 감지 
             for input in input_list:
                 if keys[input]:
                     self.reset_game_info()
+                    # 실행시키는 구문
                     self.done = True
         elif self.cursor.state == c.PLAYER2:
             self.cursor.rect.y = 403
+            # 커서의 위치 변경 
             if keys[pg.K_UP]:
                 self.cursor.state = c.PLAYER1
+            # input 감지 
+            for input in input_list:
+                if keys[input]:
+                    self.reset_game_info()
+                    # 실행시키는 구문
+                    self.done = False
 
 
     def reset_game_info(self):
         """Resets the game info in case of a Game Over and restart"""
         self.game_info[c.COIN_TOTAL] = 0
         self.game_info[c.SCORE] = 0
-        self.game_info[c.LIVES] = 3
+        self.game_info[c.LIVES] = 4
         self.game_info[c.CURRENT_TIME] = 0.0
         self.game_info[c.LEVEL_STATE] = None
 
